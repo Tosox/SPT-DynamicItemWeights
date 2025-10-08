@@ -28,7 +28,7 @@ $defaultJson = Join-Path $repoRoot $ConfigJson
 Copy-Item $defaultJson $dstConfig
 
 # Zip
-$zipName = "$PluginName-$ver.zip"
+$zipName = "$PluginName-v$ver.zip"
 $zipPath = Join-Path $repoRoot $zipName
 if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
 Compress-Archive -Path (Join-Path $packRoot "*") -DestinationPath $zipPath
