@@ -10,7 +10,7 @@ on:
 env:
   SOLUTION_FILE_PATH: .
   BUILD_CONFIGURATION: Release
-  BUILD_PLATFORM: "Any CPU"
+  BUILD_PLATFORM: Any CPU
   TARGET_FRAMEWORK: net472
 
 permissions:
@@ -30,11 +30,11 @@ jobs:
         
     - name: Restore NuGet packages
       working-directory: ${{ env.GITHUB_WORKSPACE }}
-      run: msbuild /t:Restore /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform=${{ env.BUILD_PLATFORM }} ${{ env.SOLUTION_FILE_PATH }}
+      run: msbuild /t:Restore /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform="${{ env.BUILD_PLATFORM }}" ${{ env.SOLUTION_FILE_PATH }}
 
     - name: Build Solution
       working-directory: ${{ env.GITHUB_WORKSPACE }}
-      run: msbuild /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform=${{ env.BUILD_PLATFORM }} ${{ env.SOLUTION_FILE_PATH }}
+      run: msbuild /m /p:Configuration=${{ env.BUILD_CONFIGURATION }} /p:Platform="${{ env.BUILD_PLATFORM }}" ${{ env.SOLUTION_FILE_PATH }}
 
     - name: Archive Build Artifacts
       uses: actions/upload-artifact@v4
