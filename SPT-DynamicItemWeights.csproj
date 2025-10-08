@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<TargetFramework>net472</TargetFramework>
+    <OutputType>Library</OutputType>
+    <Nullable>disable</Nullable>
+    <RootNamespace>Tosox.DynamicItemWeights</RootNamespace>
+    <AssemblyName>Tosox.DynamicItemWeights</AssemblyName>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Configurations>Debug;Release</Configurations>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="References\**" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.*" />
+    <PackageReference Include="UnityEngine.Modules" Version="2022.3.43" IncludeAssets="compile" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp" HintPath="References\hollowed.dll" Private="false" />
+    <Reference Include="ItemComponent.Types" HintPath="References\ItemComponent.Types.dll" Private="false" />
+	<Reference Include="Newtonsoft.Json" HintPath="References\Newtonsoft.Json.dll" Private="false" />
+    <Reference Include="spt-common" HintPath="References\spt-common.dll" Private="false" />
+    <Reference Include="spt-core" HintPath="References\spt-core.dll" Private="false" />
+    <Reference Include="spt-custom" HintPath="References\spt-custom.dll" Private="false" />
+    <Reference Include="spt-debugging" HintPath="References\spt-debugging.dll" Private="false" />
+    <Reference Include="spt-reflection" HintPath="References\spt-reflection.dll" Private="false" />
+    <Reference Include="spt-singleplayer" HintPath="References\spt-singleplayer.dll" Private="false" />
+  </ItemGroup>
+</Project>
