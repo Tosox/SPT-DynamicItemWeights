@@ -2,7 +2,7 @@
 
 ## 📜 Description
 
-**Dynamic Item Weights** is a plugin for *Single Player Tarkov* that adjusts the weight of items based on their current usage.
+**Dynamic Item Weights** is a mod for *Single Player Tarkov* that adjusts the weight of items based on their current usage.
 
 ## ✨ Features
 
