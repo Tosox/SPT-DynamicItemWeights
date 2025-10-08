@@ -6,7 +6,7 @@
 
 ## ✨ Features
 
-* Adjusts weight for items dynamically based on remaining resources
+* Adjusts weight for items dynamically based on their usage
 * In-game configuration settings for fine-tuning
 * Empty weights fully configurable via `emptyweights.json`
 
