@@ -11,7 +11,7 @@ namespace Tosox.DynamicItemWeights
     public class Plugin : BaseUnityPlugin
     {
         public const string PluginName = "Dynamic Item Weights";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.1.0";
 
         public static readonly string PluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static readonly string ConfigFolder = Path.Combine(PluginFolder, Assembly.GetExecutingAssembly().GetName().Name);
