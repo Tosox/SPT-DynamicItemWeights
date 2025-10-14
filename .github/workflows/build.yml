@@ -11,7 +11,6 @@ env:
   SOLUTION_FILE_PATH: .
   BUILD_CONFIGURATION: Release
   BUILD_PLATFORM: Any CPU
-  TARGET_FRAMEWORK: net472
 
 permissions:
   contents: read
@@ -40,5 +39,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: SPT-DynamicItemWeights
-        path: bin/${{ env.BUILD_CONFIGURATION }}/${{ env.TARGET_FRAMEWORK }}/*
+        path: bin/${{ env.BUILD_CONFIGURATION }}/*
         retention-days: 1

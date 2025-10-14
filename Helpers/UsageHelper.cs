@@ -37,7 +37,7 @@ namespace Tosox.DynamicItemWeights.Helpers
 
             if (item.TryGetItemComponent<RepairKitComponent>(out var repairKit))
             {
-                fraction = Mathf.Clamp(repairKit.Resource / repairKit.repairKitsTemplateClass.MaxRepairResource, 0.0f, 1.0f);
+                fraction = Mathf.Clamp(repairKit.Resource / repairKit.RepairKitsTemplateClass.MaxRepairResource, 0.0f, 1.0f);
                 return true;
             }
 

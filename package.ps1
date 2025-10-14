@@ -5,7 +5,7 @@
 )
 
 $repoRoot = $PSScriptRoot
-$bin = Join-Path $repoRoot "bin\Release\net472"
+$bin = Join-Path $repoRoot "bin\Release"
 $dll = Join-Path $bin $DllName
 if (-not (Test-Path $dll)) {
   throw "DLL not found. Build Release first."
