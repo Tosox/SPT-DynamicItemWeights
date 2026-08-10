@@ -1,5 +1,7 @@
 ﻿# Dynamic Item Weights
 
+[![Total Downloads](https://img.shields.io/github/downloads/Tosox/SPT-DynamicItemWeights/total.svg?label=Downloads%20(All%20Time))](https://github.com/Tosox/SPT-DynamicItemWeights/releases) [![Latest Release Downloads](https://img.shields.io/github/downloads/Tosox/SPT-DynamicItemWeights/latest/total.svg?label=Downloads%20(Latest%20Release))](https://github.com/Tosox/SPT-DynamicItemWeights/releases/latest)
+
 ## 📜 Description
 
 **Dynamic Item Weights** is a mod for *Single Player Tarkov* that adjusts the weight of items based on their current usage.
