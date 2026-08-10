@@ -8,7 +8,7 @@
 
 * Adjusts weight for items dynamically based on their usage
 * In-game configuration settings for fine-tuning
-* Empty weights fully configurable via `emptyweights.json`
+* Tare weights fully configurable via `tareweights.jsonc`
 
 ## 📁 Installation
 
@@ -20,27 +20,21 @@
 
 ### In-game menu
 
-* **Enable Plugin**: Toggle dynamic item weights on/off
-* **Default Empty Fraction**: Fallback empty weight as a fraction of the full item weight
+* **Enabled**: Toggle dynamic item weights on/off
+* **Default Tare Fraction**: Fallback tare weight as a fraction of the full item weight
+* **Verbose Logging**: Log every single weight adjustment (troubleshooting only)
 
-### emptyweights.json
+### tareweights.jsonc
 
-A JSON file mapping the item template ID to the empty weight in kilograms
-```json
+A JSONC file mapping the item template ID to the tare weight in kilograms, that is, what the
+item still weighs once it is fully used up
+```jsonc
 {
-    "57513f07245977207e26a311": 0.030, // Apple
-    "5d1b36a186f7742523398433": 2.500  // Fuel (Metal)
+    "57513f07245977207e26a311": 0.030, // Pack of apple juice
+    "5d1b36a186f7742523398433": 2.500  // Metal fuel tank
 }
 ```
-> If an item is missing, the plugin uses `Default Empty Fraction` of the original weight
-
-## ℹ️ Supported Items
-
-* Medical items (`MedKitComponent`)
-* Food & Drinks (`FoodDrinkComponent`)
-* Fuel (`FuelItemClass` with `ResourceComponent`)
-* Repair Kits (`RepairKitComponent`)
-> Check `emptyweights.json` for an extensive list
+> If an item is missing, the plugin uses `Default Tare Fraction` of the original weight
 
 ## 📷 Preview
 

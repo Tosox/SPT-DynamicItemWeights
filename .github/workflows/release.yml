@@ -36,7 +36,7 @@ jobs:
       run: |
         mkdir -p release/BepInEx/plugins/${{ env.PLUGIN_NAME }}
         cp -a artifact/*.dll release/BepInEx/plugins/
-        cp -a emptyweights.json release/BepInEx/plugins/${{ env.PLUGIN_NAME }}
+        cp -a tareweights.jsonc release/BepInEx/plugins/${{ env.PLUGIN_NAME }}
         cd release
         zip -r ../${{ env.PLUGIN_NAME }}-${{ github.event.inputs.build-ver }}.zip .
         cd ..

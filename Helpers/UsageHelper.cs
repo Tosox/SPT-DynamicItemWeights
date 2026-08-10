@@ -1,47 +1,37 @@
-﻿using BepInEx.Logging;
 using EFT.InventoryLogic;
 using UnityEngine;
 
 namespace Tosox.DynamicItemWeights.Helpers
 {
-    public class UsageHelper
+    internal static class UsageHelper
     {
-        private readonly ManualLogSource _logger;
-
-        public UsageHelper(ManualLogSource logger)
+        internal static bool TryGetUsageFraction(Item item, out float fraction)
         {
-            _logger = logger;
-        }
-
-        public bool TryGetUsageFraction(Item item, out float fraction)
-        {
-            fraction = 1.0f;
-
             if (item.TryGetItemComponent<MedKitComponent>(out var medkit))
             {
-                fraction = Mathf.Clamp(medkit.HpResource / medkit.MaxHpResource, 0.0f, 1.0f);
-                return true;
+                fraction = medkit.RelativeValue;
             }
-
-            if (item.TryGetItemComponent<FoodDrinkComponent>(out var food) && food.MaxResource > 1.0f)
+            else if (item.TryGetItemComponent<FoodDrinkComponent>(out var food) && food.MaxResource > 1.0f)
             {
-                fraction = Mathf.Clamp(food.HpPercent / food.MaxResource, 0.0f, 1.0f);
-                return true;
+                fraction = food.RelativeValue;
             }
-
-            if (item.TryGetItemComponent<ResourceComponent>(out var resource) && item is FuelItemClass)
+            else if (item is Fuel && item.TryGetItemComponent<ResourceComponent>(out var resource))
             {
-                fraction = Mathf.Clamp(resource.Value / resource.MaxResource, 0.0f, 1.0f);
-                return true;
+                fraction = resource.RelativeValue;
             }
-
-            if (item.TryGetItemComponent<RepairKitComponent>(out var repairKit))
+            else if (item.TryGetItemComponent<RepairKitComponent>(out var repairKit))
             {
-                fraction = Mathf.Clamp(repairKit.Resource / repairKit.RepairKitsTemplateClass.MaxRepairResource, 0.0f, 1.0f);
-                return true;
+                fraction = repairKit.Resource / repairKit._template.MaxRepairResource;
+            }
+            else
+            {
+                fraction = 1.0f;
+                return false;
             }
 
-            return false;
+            // Treat a bad ratio as full so the weight is left alone
+            fraction = float.IsNaN(fraction) ? 1.0f : Mathf.Clamp01(fraction);
+            return true;
         }
     }
 }

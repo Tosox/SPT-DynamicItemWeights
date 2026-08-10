@@ -1,23 +1,16 @@
-﻿using EFT.InventoryLogic;
+using EFT;
+using EFT.InventoryLogic;
 using HarmonyLib;
 using SPT.Reflection.Patching;
-using Tosox.DynamicItemWeights.Helpers;
 using System.Reflection;
+using Tosox.DynamicItemWeights.Configuration;
+using Tosox.DynamicItemWeights.Helpers;
 using UnityEngine;
 
 namespace Tosox.DynamicItemWeights.Patches
 {
-    public class ItemWeightPatch : ModulePatch
+    internal class ItemWeightPatch : ModulePatch
     {
-        private static UsageHelper _usageHelper;
-        private static EmptyWeightDB _emptyWeightDB;
-
-        public ItemWeightPatch(UsageHelper usageHelper, EmptyWeightDB emptyWeightDB)
-        {
-            _usageHelper = usageHelper;
-            _emptyWeightDB = emptyWeightDB;
-        }
-
         protected override MethodBase GetTargetMethod()
         {
             return AccessTools.PropertyGetter(typeof(Item), nameof(Item.Weight));
@@ -26,39 +19,30 @@ namespace Tosox.DynamicItemWeights.Patches
         [PatchPostfix]
         public static void PatchPostfix(Item __instance, ref float __result)
         {
-            if (!Plugin.IsPluginEnabled.Value)
+            if (!Settings.Enabled.Value)
                 return;
 
-            try
+            // Only modify items with consumable usage, and leave full ones alone
+            if (!UsageHelper.TryGetUsageFraction(__instance, out float usage) || usage >= 0.9999f)
+                return;
+
+            float original = __result;
+            string templateId = __instance.StringTemplateId;
+
+            // Determine tare weight
+            if (!TareWeightDB.TryGet(templateId, out float tareWeight))
             {
-                // Only modify items with consumable usage
-                if (!_usageHelper.TryGetUsageFraction(__instance, out float usage))
-                    return;
-
-                // Ignore full items
-                if (usage >= 0.9999f)
-                    return;
-
-                float original = __result;
-
-                // Determine empty weight
-                if (!_emptyWeightDB.TryGet(__instance.TemplateId, out float emptyWeight))
-                {
-                    emptyWeight = Mathf.Max(0.0f, Plugin.DefaultEmptyFraction.Value * original);
-                    Logger.LogWarning($"Item '{__instance.LocalizedName()}' ({__instance.TemplateId}) not found in empty weight DB");
-                }
-
-                // Clamp sanity
-                emptyWeight = Mathf.Clamp(emptyWeight, 0.0f, original);
-
-                // Interpolate
-                float adjusted = emptyWeight + (original - emptyWeight) * usage;
-
-                __result = adjusted;
-
-                Logger.LogDebug($"Item '{__instance.LocalizedName()}' weight adjusted: {original} -> {adjusted} (empty: {emptyWeight}, usage: {usage})");
+                tareWeight = Settings.DefaultTareFraction.Value * original;
+                Logger.LogWarning($"Item '{__instance.LocalizedName()}' ({templateId}) not found in tare weight DB, falling back to the default fraction");
             }
-            catch { /* Ignore */ }
+
+            // A fully used item can never weigh more than a full one
+            tareWeight = Mathf.Clamp(tareWeight, 0.0f, original);
+
+            __result = Mathf.Lerp(tareWeight, original, usage);
+
+            if (Settings.VerboseLogging.Value)
+                Logger.LogDebug($"Item '{__instance.LocalizedName()}' weight adjusted: {original} -> {__result} (tare: {tareWeight}, usage: {usage})");
         }
     }
 }
