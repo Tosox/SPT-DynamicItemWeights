@@ -33,6 +33,7 @@ namespace Tosox.DynamicItemWeights
             }
 
             new ItemWeightPatch().Enable();
+            new ItemRefreshPatch().Enable();
 
             Logger.LogInfo("Plugin loaded successfully");
         }
