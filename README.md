@@ -36,6 +36,10 @@ item still weighs once it is fully used up
 ```
 > If an item is missing, the plugin uses `Default Tare Fraction` of the original weight
 
+## 📝 Changelog
+
+You can check out the latest changes in [`CHANGELOG.md`](CHANGELOG.md).
+
 ## 📷 Preview
 
 <img src="readme-res/fuel_full.png" alt="fuel_full" width="500"/>
